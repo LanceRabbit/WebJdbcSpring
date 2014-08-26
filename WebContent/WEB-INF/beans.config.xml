@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	
+
+	<bean id="dataSource"
+		class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/xxx"></property>
+	</bean>
+
+	<bean id="jdbcTemplate"
+			class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="dataSource"></constructor-arg>
+	</bean>
+	
+	<bean id="customerDao" class="model.dao.CustomerDAOJdbc">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="template" ref="jdbcTemplate"></property>
+	</bean>
+	
+	<bean id="customerService" class="model.CustomerService">
+		<constructor-arg ref="customerDao"></constructor-arg>
+	</bean>
+
+	<bean id="productDAO" class="model.dao.ProductDAOJdbc">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="template" ref="jdbcTemplate"></property>
+	</bean>
+	
+	<bean id="productService" class="model.ProductService">
+		<constructor-arg ref="productDAO"></constructor-arg>
+	</bean>
+</beans>
