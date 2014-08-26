@@ -35,6 +35,7 @@ public class CusomerServlet extends HttpServlet {
 		ApplicationContext context = 
 				WebApplicationContextUtils.getWebApplicationContext(application);
 		service =  (CustomerService)context.getBean("customerService");
+		System.out.println("CusomerServlet init end");
 	}
 	
 	@Override
